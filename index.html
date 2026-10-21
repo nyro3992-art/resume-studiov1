@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Resume Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1fb;--ink:#14213d;--muted:#5a678a;--card:#fff;--line:#d9dff2;--blue:#2f5bff;--sun:#ffb703;--ease:cubic-bezier(.22,.8,.3,1);color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1222;--ink:#eef1ff;--muted:#9eaad0;--card:#151f38;--line:#27335a;--blue:#7d99ff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1222;--ink:#eef1ff;--muted:#9eaad0;--card:#151f38;--line:#27335a;--blue:#7d99ff;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "DM Sans",system-ui,sans-serif;transition:background .4s,color .4s}
+h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",sans-serif;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+header.top{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 20px;display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;transition:background .4s}
+.brand{font:800 22px "Bricolage Grotesque",sans-serif;margin-right:auto;animation:drop .8s var(--ease) both}
+.brand i{font-style:normal;background:var(--sun);color:#14213d;padding:0 .25em;border-radius:6px;margin-left:4px}
+@keyframes drop{from{opacity:0;transform:translateY(-14px)}}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.seg button{border:0;background:none;padding:6px 14px;border-radius:7px;transition:background .25s,color .25s}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.sw{display:flex;gap:8px}
+.sw button{width:26px;height:26px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1px var(--line);transition:transform .25s var(--ease),box-shadow .25s}
+.sw button:hover{transform:scale(1.15)}
+.sw button[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ink)}
+.btn{border:1px solid var(--line);background:var(--card);padding:8px 16px;border-radius:10px;font-weight:500;transition:transform .2s var(--ease),background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}
+.meter{height:5px;background:var(--line)}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--sun));transition:width .9s var(--ease)}
+.app{display:grid;grid-template-columns:minmax(340px,480px) 1fr;gap:28px;padding:24px 20px 60px;max-width:1500px;margin:0 auto}
+.tabs{display:none}
+.editor{display:grid;gap:12px;align-content:start}
+.acc{background:var(--card);border:1px solid var(--line);border-radius:14px;animation:rise .7s var(--ease) both;transition:border-color .3s}
+.acc:nth-child(2){animation-delay:.07s}.acc:nth-child(3){animation-delay:.14s}.acc:nth-child(4){animation-delay:.21s}.acc:nth-child(5){animation-delay:.28s}.acc:nth-child(6){animation-delay:.35s}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}}
+.acc.open{border-color:var(--blue)}
+.hd{width:100%;display:flex;justify-content:space-between;align-items:center;border:0;background:none;padding:16px 18px;font:700 18px "Bricolage Grotesque",sans-serif}
+.hd span{font:500 13px "DM Sans";color:var(--muted);margin-left:auto;margin-right:12px}
+.hd:after{content:"";width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-2px,-2px);transition:transform .4s var(--ease)}
+.acc.open .hd:after{transform:rotate(-135deg)}
+.bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+.acc.open .bd{grid-template-rows:1fr}
+.in{overflow:hidden;min-height:0}
+.pad{padding:2px 18px 18px;display:grid;gap:12px}
+label{display:grid;gap:5px;font-size:14px;font-weight:500;color:var(--muted)}
+input,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;width:100%;transition:border-color .2s,box-shadow .2s}
+input:focus,textarea:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 25%,transparent)}
+textarea{min-height:84px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.item{border:1px dashed var(--line);border-radius:12px;padding:14px;display:grid;gap:10px;position:relative}
+.item.new{animation:pop .55s var(--ease)}
+@keyframes pop{from{opacity:0;transform:scale(.93) translateY(10px)}}
+.item.out{opacity:0;transform:scale(.95);transition:.3s}
+.del{justify-self:end;border:0;background:none;color:#d6405b;font-size:14px;font-weight:500}
+.add{border:2px dashed var(--line);background:none;border-radius:12px;padding:10px;font-weight:500;color:var(--blue);transition:background .25s,border-color .25s}
+.add:hover{border-color:var(--blue);background:color-mix(in srgb,var(--blue) 8%,transparent)}
+.stage{position:sticky;top:96px;align-self:start}
+.fit{width:100%;position:relative;transition:height .4s var(--ease)}
+.paper{position:absolute;left:0;top:0;width:794px;min-height:1123px;background:#fff;color:#1a2238;transform-origin:0 0;box-shadow:0 20px 60px rgba(20,33,61,.22);border-radius:4px;font:14px/1.5 "DM Sans",sans-serif;animation:rise .9s .3s var(--ease) both}
+.paper.swap{animation:swap .5s var(--ease)}
+@keyframes swap{from{opacity:.2;filter:blur(5px)}}
+.paper h1{font:800 40px/1.05 "Bricolage Grotesque",sans-serif;margin:0}
+.paper h2{font:800 15px "Bricolage Grotesque",sans-serif;color:var(--ac);margin:22px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--ac)}
+.paper .t{font-size:18px;color:#4a5578;margin:4px 0 8px}
+.paper .c{color:#4a5578;font-size:13px}
+.paper .r{display:flex;justify-content:space-between;gap:12px;font-weight:700}
+.paper .r b{font-weight:400;color:#4a5578;white-space:nowrap}
+.paper .o{color:#4a5578;margin-bottom:4px}
+.paper ul{margin:4px 0 12px;padding-left:18px}
+.paper p{margin:0 0 6px}
+.paper .tg{display:flex;flex-wrap:wrap;gap:6px}
+.paper .tg span{border:1.5px solid var(--ac);color:var(--ac);padding:2px 10px;border-radius:99px;font-size:13px;font-weight:500}
+.classic{padding:52px 56px}
+.side{display:grid;grid-template-columns:260px 1fr}
+.side .l{background:var(--ac);color:#fff;padding:46px 26px}
+.side .l h1{font-size:34px}.side .l .t,.side .l .c{color:rgba(255,255,255,.88)}
+.side .l h2{color:#fff;border-color:rgba(255,255,255,.5)}
+.side .l .tg span{border-color:#fff;color:#fff}
+.side .l .c div{margin-bottom:5px;word-break:break-word}
+.side .rt{padding:46px 38px}
+.side .rt h2:first-child{margin-top:0}
+.empty{color:#9aa3bf;font-style:italic}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);width:min(560px,92vw);padding:22px;animation:pop .4s var(--ease)}
+dialog::backdrop{background:rgba(10,16,34,.55);backdrop-filter:blur(3px)}
+dialog textarea{min-height:200px;font:13px/1.4 ui-monospace,monospace}
+.row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:99px;opacity:0;pointer-events:none;transition:.4s var(--ease);z-index:30}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+body:before,body:after{content:"";position:fixed;z-index:-1;width:46vmax;height:46vmax;border-radius:50%;filter:blur(90px);opacity:.3;animation:float 22s ease-in-out infinite alternate;pointer-events:none}
+body:before{background:var(--blue);top:-18vmax;left:-12vmax}
+body:after{background:var(--sun);bottom:-22vmax;right:-14vmax;animation-delay:-9s}
+@keyframes float{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+header.top{background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:blur(14px)}
+.acc{background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(10px)}
+.aib{display:none;justify-self:start}.has-ai .aib{display:inline-block}
+.score{position:relative;width:130px;height:130px;margin:4px auto}
+.score svg{width:100%;transform:rotate(-90deg)}
+.score circle{fill:none;stroke-width:9}
+.score .bg{stroke:var(--line)}
+.score .fg{stroke:var(--blue);stroke-linecap:round;stroke-dasharray:264;stroke-dashoffset:264;transition:stroke-dashoffset 1.1s var(--ease)}
+.score b{position:absolute;inset:0;display:grid;place-items:center;font:800 34px "Bricolage Grotesque",sans-serif}
+#tips{margin:0;padding-left:20px;color:var(--muted);font-size:14px}
+#tips .ok{color:#0f8a6a;font-weight:500}
+#kw{display:flex;flex-wrap:wrap;gap:6px}
+#kw span{padding:3px 11px;border-radius:99px;font-size:13px;font-weight:500;animation:pop .4s var(--ease)}
+#kw .hit{background:color-mix(in srgb,#0f8a6a 18%,transparent);color:#0f8a6a}
+#kw .miss{border:1px dashed #d6405b;color:#d6405b}
+.ph{width:92px;height:92px;border-radius:50%;object-fit:cover;display:block}
+.classic .ph{float:right;margin-left:16px}
+.side .ph{width:130px;height:130px;margin:0 auto 18px;border:4px solid rgba(255,255,255,.7)}
+#cmd{padding:0;width:min(540px,92vw);margin:12vh auto auto}
+#cmdq{border:0;border-bottom:1px solid var(--line);border-radius:0;padding:16px 20px;font-size:17px;background:transparent}
+#cmdl{list-style:none;margin:0;padding:8px;max-height:50vh;overflow:auto}
+#cmdl li{padding:10px 14px;border-radius:9px;cursor:pointer;transition:background .15s}
+#cmdl li.on{background:var(--blue);color:#fff}
+.pbox{display:flex;gap:16px;align-items:center;padding:14px;border:2px dashed var(--line);border-radius:14px;transition:border-color .25s,background .25s}
+.pbox.drag{border-color:var(--blue);background:color-mix(in srgb,var(--blue) 10%,transparent)}
+.pbox b{display:block;font:700 17px "Bricolage Grotesque",sans-serif}
+.pbox small{display:block;color:var(--muted);font-size:13px;line-height:1.4}
+.pbox .seg button{padding:4px 10px;font-size:14px}
+.av{position:relative;flex:none;width:88px;height:88px;border-radius:50%;background:var(--bg);border:2px solid var(--line);display:grid;place-items:center;overflow:hidden;color:var(--blue);font:300 38px/1 "DM Sans",sans-serif;cursor:pointer;transition:transform .3s var(--ease),border-color .3s}
+.av.sq{border-radius:14px}
+.av:hover{transform:scale(1.06);border-color:var(--blue)}
+.av:focus-within{outline:3px solid var(--blue);outline-offset:3px}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:pop .5s var(--ease)}
+.av input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;padding:0}
+label.btn{cursor:pointer}
+.ph.sq{border-radius:12px}
+@media print{body:before,body:after{display:none}.paper{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media(max-width:900px){.app{grid-template-columns:1fr;padding-top:14px}.tabs{display:flex;margin:14px 20px 0}.tabs .seg{width:100%}.tabs button{flex:1}.stage{position:static}.app[data-v="e"] .stage{display:none}.app[data-v="p"] .editor{display:none}}
+@media print{@page{size:A4;margin:0}body{background:#fff}header.top,.meter,.tabs,.editor,#toast{display:none!important}.app{display:block;padding:0;max-width:none}.stage{position:static;display:block!important}.fit{height:auto!important}.paper{position:static;transform:none!important;box-shadow:none;animation:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="brand">Resume<i>Studio</i></div>
+<div class="seg" role="group" aria-label="Template"><button data-tpl="classic">Classic</button><button data-tpl="side">Sidebar</button></div>
+<div class="sw" role="group" aria-label="Accent color" id="sw"></div>
+<div class="seg" role="group" aria-label="Language"><button data-lang="en">EN</button><button data-lang="hi">हिं</button></div>
+<button class="btn" id="kc" aria-label="Open command palette">Commands</button>
+<button class="btn" id="th" aria-label="Switch light or dark theme">Theme</button>
+<button class="btn" id="bk">Backup</button>
+<button class="btn pri" id="pr">Print or save PDF</button>
+</header>
+<div class="meter" title="Resume completeness"><i id="mt"></i></div>
+<div class="tabs"><div class="seg" role="group" aria-label="View"><button data-v="e" aria-pressed="true">Edit</button><button data-v="p">Preview</button></div></div>
+<div class="app" id="app" data-v="e">
+<div class="editor" id="ed"></div>
+<div class="stage"><div class="fit" id="fit"><div class="paper" id="paper"></div></div></div>
+</div>
+<dialog id="dlg"><h3>Backup and restore</h3>
+<p style="color:var(--muted);margin:6px 0 12px">Copy this text and keep it somewhere safe. To restore a resume, paste a saved backup here and press Restore.</p>
+<textarea id="bt" aria-label="Backup data"></textarea>
+<div class="row"><button class="btn pri" id="cp">Copy backup</button><button class="btn" id="rs">Restore</button><button class="btn" id="rz">Reset to sample</button><button class="btn" id="cl" style="margin-left:auto">Close</button></div></dialog>
+<dialog id="cmd"><input id="cmdq" placeholder="Type a command, like dark or sidebar" aria-label="Search commands" autocomplete="off"><ul id="cmdl"></ul></dialog>
+<dialog id="cv"><h3>Cover letter</h3><textarea id="cvt" aria-label="Cover letter" style="min-height:300px;margin-top:10px;font:15px/1.5 'DM Sans',sans-serif"></textarea><div class="row"><button class="btn pri" id="cvc">Copy</button><button class="btn" id="cvx">Close</button></div></dialog>
+<div id="toast" role="status"></div>
+
+<script>
+var KEY='resume-studio-v1',COLORS=['#2f5bff','#0f8a6a','#c2255c','#e8590c','#6741d9','#14213d'];
+var SAMPLE={tpl:'classic',ac:COLORS[0],
+p:{name:'Sahil',title:'Aspiring Software Developer',email:'sahil@example.com',phone:'+91 90000 00000',city:'Kanpur, India',link:'github.com/sahil'},
+summary:'Motivated student who loves building useful software. Quick learner with strong problem solving skills and a habit of finishing projects.',
+exp:[{role:'Intern, Web Development',org:'Your Company',when:'Jun 2026 – Aug 2026',desc:'Built responsive pages with HTML, CSS and JavaScript.\nFixed bugs and improved page loading speed.'}],
+edu:[{deg:'B.Tech, Computer Science',org:'Your College',when:'2024 – 2028'}],
+skills:'Java, JavaScript, HTML, CSS, Git, Problem solving',
+proj:[{name:'Task Tracker',desc:'A simple app to manage daily tasks.',link:'github.com/sahil/tasks'}]};
+var S=load(),open={score:1,p:1,summary:1},$=function(i){return document.getElementById(i)};
+function load(){try{var r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return JSON.parse(JSON.stringify(SAMPLE))}
+var st;function save(){clearTimeout(st);st=setTimeout(function(){try{localStorage.setItem(KEY,JSON.stringify(S));toast('Saved on this device')}catch(e){toast('Could not save here. Use Backup to keep your data.')}},700)}
+function toast(m){var t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('on')},1800)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function F(label,k,v,l,i,tx){var a=' data-k="'+k+'"'+(l?' data-l="'+l+'" data-i="'+i+'"':'');return '<label>'+label+(tx?'<textarea'+a+'>'+esc(v)+'</textarea>':'<input'+a+' value="'+esc(v)+'">')+'</label>'}
+function list(l,items,fields,addLabel,tag){return '<div class="pad">'+items.map(function(it,i){return '<div class="item" data-it="'+l+i+'">'+fields(it,i)+'<button class="del" data-del="'+l+'" data-i="'+i+'">Remove</button></div>'}).join('')+'<button class="add" data-add="'+l+'">'+addLabel+'</button></div>'}
+function acc(id,title,sub,body){return '<section class="acc'+(open[id]?' open':'')+'" data-id="'+id+'"><button class="hd" aria-expanded="'+!!open[id]+'">'+title+'<span>'+sub+'</span></button><div class="bd"><div class="in">'+body+'</div></div></section>'}
+function editor(newId){var p=S.p;
+$('ed').innerHTML=
+acc('score','Resume score and job match','',scorePanel())+acc('p','Personal details','',"<div class='pad'>"+photoBox()+F('Full name','p.name',p.name)+F('Job title','p.title',p.title)+'<div class="two">'+F('Email','p.email',p.email)+F('Phone','p.phone',p.phone)+'</div><div class="two">'+F('City','p.city',p.city)+F('Website or GitHub','p.link',p.link)+'</div></div>')+
+acc('summary','Summary','',"<div class='pad'>"+F('A short introduction about you','summary',S.summary,0,0,1)+'<button class="btn aib" data-ai="sum">✨ Write with AI</button></div>')+
+acc('exp','Experience',S.exp.length+' added',list('exp',S.exp,function(x,i){return F('Role','role',x.role,'exp',i)+'<div class="two">'+F('Company','org',x.org,'exp',i)+F('Dates','when',x.when,'exp',i)+'</div>'+F('What you did (one point per line)','desc',x.desc,'exp',i,1)+'<button class="btn aib" data-ai="exp" data-i="'+i+'">✨ Improve with AI</button>'},'+ Add experience'))+
+acc('edu','Education',S.edu.length+' added',list('edu',S.edu,function(x,i){return F('Degree or course','deg',x.deg,'edu',i)+'<div class="two">'+F('School or college','org',x.org,'edu',i)+F('Years','when',x.when,'edu',i)+'</div>'},'+ Add education'))+
+acc('skills','Skills','',"<div class='pad'>"+F('Separate skills with commas','skills',S.skills,0,0,1)+'</div>')+
+acc('proj','Projects',S.proj.length+' added',list('proj',S.proj,function(x,i){return F('Project name','name',x.name,'proj',i)+F('Description','desc',x.desc,'proj',i,1)+F('Link','link',x.link,'proj',i)},'+ Add project'));
+if(newId){var n=document.querySelector('[data-it="'+newId+'"]');if(n){n.classList.add('new');n.scrollIntoView({behavior:'smooth',block:'center'})}}}
+function bul(t){var l=String(t||'').split('\n').map(function(x){return x.trim()}).filter(Boolean);return l.length?'<ul>'+l.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>':''}
+var HI={Summary:'सारांश',Experience:'अनुभव',Education:'शिक्षा',Skills:'कौशल',Projects:'प्रोजेक्ट्स','About me':'मेरे बारे में'};
+function sec(h,b){return b?'<h2>'+(S.lang==='hi'&&HI[h]||h)+'</h2>'+b:''}
+function preview(){var p=S.p,sk=S.skills.split(',').map(function(x){return x.trim()}).filter(Boolean);
+var ex=S.exp.map(function(x){return '<div class="r"><span>'+esc(x.role)+'</span><b>'+esc(x.when)+'</b></div><div class="o">'+esc(x.org)+'</div>'+bul(x.desc)}).join('');
+var ed=S.edu.map(function(x){return '<div class="r"><span>'+esc(x.deg)+'</span><b>'+esc(x.when)+'</b></div><div class="o">'+esc(x.org)+'</div>'}).join('');
+var pj=S.proj.map(function(x){return '<div class="r"><span>'+esc(x.name)+'</span><b>'+esc(x.link)+'</b></div><p>'+esc(x.desc)+'</p>'}).join('');
+var tg=sk.length?'<div class="tg">'+sk.map(function(x){return '<span>'+esc(x)+'</span>'}).join('')+'</div>':'';
+var sm=S.summary?'<p>'+esc(S.summary)+'</p>':'';
+var cs=[p.email,p.phone,p.city,p.link].filter(Boolean);
+var pa=$('paper');pa.style.setProperty('--ac',S.ac);
+if(S.tpl==='side'){pa.className='paper side'+(pa.classList.contains('swap')?' swap':'');
+pa.innerHTML='<div class="l">'+ph()+'<h1>'+(esc(p.name)||'<span class="empty">Your name</span>')+'</h1><div class="t">'+esc(p.title)+'</div><h2>'+(S.lang==='hi'?'संपर्क':'Contact')+'</h2><div class="c">'+cs.map(function(c){return '<div>'+esc(c)+'</div>'}).join('')+'</div>'+sec('Skills',tg)+'</div><div class="rt">'+sec('About me',sm)+sec('Experience',ex)+sec('Education',ed)+sec('Projects',pj)+'</div>'}
+else{pa.className='paper classic'+(pa.classList.contains('swap')?' swap':'');
+pa.innerHTML=ph()+'<h1>'+(esc(p.name)||'<span class="empty">Your name</span>')+'</h1><div class="t">'+esc(p.title)+'</div><div class="c">'+cs.map(esc).join(' &nbsp;|&nbsp; ')+'</div>'+sec('Summary',sm)+sec('Experience',ex)+sec('Education',ed)+sec('Skills',tg)+sec('Projects',pj)}
+fit();meter();scoreUI();
+document.querySelectorAll('[data-tpl]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.tpl===S.tpl)});
+document.querySelectorAll('#sw button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.c===S.ac)})}
+function fit(){var f=$('fit'),pa=$('paper'),s=f.clientWidth/794;if(matchMedia('print').matches)return;pa.style.transform='scale('+s+')';f.style.height=Math.max(pa.offsetHeight,1123)*s+'px'}
+function meter(){var p=S.p,n=[p.name,p.title,p.email,p.phone,S.summary,S.exp.length,S.edu.length,S.skills.trim(),S.proj.length].filter(Boolean).length;$('mt').style.width=Math.round(n/9*100)+'%'}
+function swap(){var pa=$('paper');pa.classList.remove('swap');void pa.offsetWidth;pa.classList.add('swap');preview()}
+$('sw').innerHTML=COLORS.map(function(c){return '<button data-c="'+c+'" style="background:'+c+'" aria-label="Accent '+c+'"></button>'}).join('');
+document.addEventListener('input',function(e){var el=e.target,k=el.dataset.k;if(!k)return;
+if(el.dataset.l)S[el.dataset.l][el.dataset.i][k]=el.value;else if(k.indexOf('p.')===0)S.p[k.slice(2)]=el.value;else S[k]=el.value;preview();save()});
+document.addEventListener('click',function(e){var t=e.target.closest('button');if(!t)return;
+if(t.classList.contains('hd')){var a=t.parentNode,id=a.dataset.id;open[id]=!open[id];a.classList.toggle('open');t.setAttribute('aria-expanded',!!open[id]);return}
+if(t.dataset.add){var l=t.dataset.add,blank={exp:{role:'',org:'',when:'',desc:''},edu:{deg:'',org:'',when:''},proj:{name:'',desc:'',link:''}}[l];S[l].push(blank);open[l]=1;editor(l+(S[l].length-1));preview();save();return}
+if(t.dataset.del){var it=t.closest('.item'),l2=t.dataset.del,i=+t.dataset.i;it.classList.add('out');setTimeout(function(){S[l2].splice(i,1);editor();preview();save()},280);return}
+if(t.dataset.tpl){S.tpl=t.dataset.tpl;swap();save();return}
+if(t.dataset.c){S.ac=t.dataset.c;preview();save();return}
+if(t.dataset.v){$('app').dataset.v=t.dataset.v;document.querySelectorAll('[data-v]').forEach(function(b){if(b.closest('.tabs'))b.setAttribute('aria-pressed',b===t)});setTimeout(fit,30);window.scrollTo({top:0,behavior:'smooth'})}});
+$('th').onclick=function(){var r=document.documentElement,d=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=d?'light':'dark'};
+$('pr').onclick=function(){try{window.print()}catch(e){toast('Printing is not available here. Open the page in your browser and try again.')}};
+$('bk').onclick=function(){$('bt').value=JSON.stringify(S);$('dlg').showModal()};
+$('cl').onclick=function(){$('dlg').close()};
+$('cp').onclick=function(){$('bt').select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}toast(ok?'Backup copied':'Select the text and copy it manually')};
+$('rs').onclick=function(){try{var d=JSON.parse($('bt').value);if(!d.p||!d.exp)throw 0;S=d;editor();swap();save();$('dlg').close();toast('Resume restored')}catch(e){toast('That backup text is not valid')}};
+$('rz').onclick=function(){S=JSON.parse(JSON.stringify(SAMPLE));editor();swap();save();$('dlg').close();toast('Sample resume loaded')};
+var STOP=/ (the|and|for|with|you|your|our|are|will|have|has|from|that|this|about|work|team|ability|experience|skills|strong|looking|join|role|including|their|they|who|all|can|not|able|more|such|using|use|new|years|year|etc|well|must|should|also|any|its|per|but|how|what|when|where|which|plus|good|great|knowledge|understanding|candidate|responsibilities|requirements|job|company) /;
+var VERBS=/^(built|led|created|improved|designed|developed|managed|fixed|launched|increased|reduced|wrote|made|automated|organi[sz]ed|analy[sz]ed|implemented|delivered|optimi[sz]ed|taught|won|handled|helped|solved)/i;
+function checks(){var p=S.p,b=[];S.exp.forEach(function(x){String(x.desc||'').split('\n').forEach(function(l){if(l.trim())b.push(l.trim())})});
+var w=S.summary.trim().split(/\s+/).filter(Boolean).length,k=S.skills.split(',').filter(function(x){return x.trim()}).length;
+return[[10,p.email&&p.phone,'Add both an email and a phone number.'],[10,p.title,'Add a job title under your name.'],[15,w>=20&&w<=80,'Keep your summary between 20 and 80 words.'],[15,b.length>=2,'Add at least 2 bullet points under experience.'],[10,b.filter(function(l){return VERBS.test(l)}).length>=2,'Start bullet points with action verbs like Built or Led.'],[10,b.some(function(l){return /\d/.test(l)}),'Add a number to a bullet, like “cut load time by 30%”.'],[10,S.edu.some(function(e){return e.deg}),'Add your education.'],[10,k>=6,'List at least 6 skills.'],[10,S.proj.some(function(x){return x.link}),'Add a link to one of your projects.']]}
+function scorePanel(){return '<div class="pad"><div class="score"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" id="rg" cx="50" cy="50" r="42"/></svg><b id="sn">0</b></div><ul id="tips"></ul><label>Paste a job description to see which keywords your resume is missing<textarea data-k="jd" placeholder="Paste the job description here">'+esc(S.jd||'')+'</textarea></label><div id="kw"></div><button class="btn aib" data-ai="cv">✨ Write a cover letter for this job</button></div>'}
+function scoreUI(){document.querySelectorAll('[data-lang]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===(S.lang||'en'))});
+var rg=$('rg');if(!rg)return;var c=checks(),sc=c.reduce(function(a,x){return a+(x[1]?x[0]:0)},0);
+void rg.getBoundingClientRect();rg.style.strokeDashoffset=264-2.64*sc;$('sn').textContent=sc;
+$('tips').innerHTML=c.filter(function(x){return !x[1]}).map(function(x){return '<li>'+x[2]+'</li>'}).join('')||'<li class="ok">Great work. Your resume looks strong.</li>';
+var q=Object.assign({},S);delete q.jd;delete q.photo;var tx=JSON.stringify(q).toLowerCase(),f={};
+((S.jd||'').toLowerCase().match(/[a-z][a-z+#]{2,}/g)||[]).forEach(function(w){if(!STOP.test(' '+w+' '))f[w]=(f[w]||0)+1});
+var h=Object.keys(f).sort(function(a,b){return f[b]-f[a]}).slice(0,14).map(function(w){return '<span class="'+(tx.indexOf(w)>-1?'hit':'miss')+'">'+esc(w)+'</span>'}).join(''),k=$('kw');if(k.dataset.h!==h){k.dataset.h=h;k.innerHTML=h}}
+function ph(){return S.photo?'<img class="ph'+(S.shape==='square'?' sq':'')+'" alt="" src="'+S.photo+'">':''}
+var fi=document.createElement('input');fi.type='file';fi.accept='image/*';
+fi.onchange=function(){var f=fi.files[0];if(!f)return;var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var c=document.createElement('canvas'),s=Math.min(im.width,im.height);c.width=c.height=240;c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,240,240);S.photo=c.toDataURL('image/jpeg',.82);editor();preview();save()};im.src=r.result};r.readAsDataURL(f);fi.value=''};
+function photoBox(){var sq=S.shape==='square';return '<div class="pbox" id="pbox"><label class="av'+(sq?' sq':'')+'">'+(S.photo?'<img alt="Your photo" src="'+S.photo+'">':'<span aria-hidden="true">+</span>')+'<input type="file" id="pf" accept="image/*" aria-label="Upload your photo"></label><div><b>Your photo</b><small>Shown on your resume. Click the picture or drop a photo here.</small><div class="row" style="margin:10px 0 0;align-items:center"><label class="btn" for="pf">'+(S.photo?'Change photo':'Upload photo')+'</label>'+(S.photo?'<button class="btn" data-photo="0">Remove</button><div class="seg" role="group" aria-label="Photo shape"><button data-shape="round" aria-pressed="'+!sq+'">Round</button><button data-shape="square" aria-pressed="'+sq+'">Square</button></div>':'')+'</div></div></div>'}
+function pbox(){var b=$('pbox');if(b)b.outerHTML=photoBox()}
+function pick(f){if(!f)return;if(!/^image\//.test(f.type))return toast('Please choose an image file');
+var r=new FileReader();r.onerror=function(){toast('Could not read that file')};
+r.onload=function(){var im=new Image();im.onerror=function(){toast('This image type is not supported. Try a JPG or PNG.')};
+im.onload=function(){var c=document.createElement('canvas'),s=Math.min(im.width,im.height);c.width=c.height=360;c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,360,360);S.photo=c.toDataURL('image/jpeg',.85);pbox();preview();save();toast('Photo added')};im.src=r.result};r.readAsDataURL(f)}
+document.addEventListener('change',function(e){if(e.target.id==='pf'){var f=e.target.files[0];e.target.value='';pick(f)}});
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-shape]');if(!b)return;S.shape=b.dataset.shape;pbox();preview();save()});
+document.addEventListener('dragover',function(e){if(e.target.closest&&e.target.closest('#pbox')){e.preventDefault();$('pbox').classList.add('drag')}});
+document.addEventListener('dragleave',function(){var b=$('pbox');if(b)b.classList.remove('drag')});
+document.addEventListener('drop',function(e){var b=e.target.closest&&e.target.closest('#pbox');if(!b)return;e.preventDefault();b.classList.remove('drag');pick(e.dataTransfer.files[0])});
+var AI=null;try{claude.use('sample').then(function(s){if(s){AI=s;document.body.classList.add('has-ai')}}).catch(function(){})}catch(e){}
+async function ai(k,i){if(!AI)return toast('AI is not available on this page');
+var sm=k==='sum',cl=k==='cv',x=S.exp[i],p=S.p,fc='Name: '+p.name+'\nTitle: '+p.title+'\nSkills: '+S.skills+'\nSummary: '+S.summary+'\nExperience: '+S.exp.map(function(e){return e.role+' at '+e.org+': '+e.desc}).join(' | ');
+if(cl&&!(S.jd||'').trim())return toast('Paste a job description first');
+var q=sm?'Write a polished 2 to 3 sentence professional summary for this resume, without starting with "I". Use only the facts given. Return only the summary.\n'+fc:cl?'Write a short, warm, professional cover letter of about 180 words for this job. Use only the facts given and do not invent achievements. Return only the letter.\n\nJOB DESCRIPTION:\n'+S.jd+'\n\nCANDIDATE:\n'+fc:'Rewrite these resume bullet points to be concise and achievement focused. Start each with a strong action verb. Keep them truthful and do not invent numbers. Return only the bullets, one per line, with no dashes or numbering.\nRole: '+x.role+'\nBullets:\n'+x.desc;
+toast('AI is writing...');
+try{var r=await AI(q,{modelTier:'quick',cache:false}),t=String(r.text||'').trim();
+if(cl){$('cvt').value=t;$('cv').showModal();return}
+if(sm){S.summary=t;document.querySelector('[data-k="summary"]').value=t}else{x.desc=t.replace(/^[-•*]\s*/gm,'');document.querySelector('[data-l="exp"][data-i="'+i+'"][data-k="desc"]').value=x.desc}
+preview();save();toast('Done. Check it and edit if needed.')}
+catch(e){toast(e&&e.code==='not_granted'?'AI permission was not given':'AI is busy. Try again soon.')}}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-ai],[data-photo],[data-lang]');if(!b)return;
+if(b.dataset.ai)ai(b.dataset.ai,+b.dataset.i);else if(b.dataset.photo==='1')fi.click();else if(b.dataset.photo==='0'){S.photo='';pbox();preview();save()}else{S.lang=b.dataset.lang;swap();save()}});
+$('cvc').onclick=function(){$('cvt').select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}toast(ok?'Cover letter copied':'Select the text and copy it manually')};
+$('cvx').onclick=function(){$('cv').close()};
+function goto(id){open[id]=1;var a=document.querySelector('[data-id="'+id+'"]');if(!a)return;a.classList.add('open');a.querySelector('.hd').setAttribute('aria-expanded',true);$('app').dataset.v='e';a.scrollIntoView({behavior:'smooth',block:'start'})}
+var CN=['Blue','Green','Pink','Orange','Purple','Navy'],ci=0,pl=[];
+var CM=[['Template: Classic',function(){S.tpl='classic';swap();save()}],['Template: Sidebar',function(){S.tpl='side';swap();save()}],['Language: English',function(){S.lang='en';swap();save()}],['Language: Hindi',function(){S.lang='hi';swap();save()}],['Switch dark or light mode',function(){$('th').click()}],['Print or save PDF',function(){$('pr').click()}],['Backup and restore',function(){$('bk').click()}],['Write summary with AI',function(){ai('sum')}]];
+CM.push(['Add or change photo',function(){goto('p');var i=$('pf');if(i)i.click()}]);
+COLORS.forEach(function(c,i){CM.push(['Accent color: '+CN[i],function(){S.ac=c;preview();save()}])});
+['p:Personal details','summary:Summary','exp:Experience','edu:Education','skills:Skills','proj:Projects','score:Resume score and job match'].forEach(function(x){var a=x.split(':');CM.push(['Go to '+a[1],function(){goto(a[0])}])});
+function cmdDraw(){var q=$('cmdq').value.toLowerCase();pl=CM.filter(function(c){return c[0].toLowerCase().indexOf(q)>-1});ci=0;$('cmdl').innerHTML=pl.map(function(c,i){return '<li data-n="'+i+'"'+(i?'':' class="on"')+'>'+c[0]+'</li>'}).join('')||'<li>No command found</li>'}
+function cmdRun(i){var c=pl[i];if(!c)return;$('cmd').close();c[1]()}
+function cmdOpen(){$('cmdq').value='';cmdDraw();$('cmd').showModal();$('cmdq').focus()}
+$('kc').onclick=cmdOpen;
+addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();cmdOpen()}});
+$('cmdq').oninput=cmdDraw;
+$('cmdq').onkeydown=function(e){var n=pl.length;if(!n)return;if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();ci=(ci+(e.key==='ArrowDown'?1:n-1))%n;[].forEach.call($('cmdl').children,function(l,i){l.classList.toggle('on',i===ci)});$('cmdl').children[ci].scrollIntoView({block:'nearest'})}else if(e.key==='Enter'){e.preventDefault();cmdRun(ci)}};
+$('cmdl').onclick=function(e){var l=e.target.closest('li[data-n]');if(l)cmdRun(+l.dataset.n)};
+addEventListener('resize',fit);
+editor();preview();setTimeout(fit,400);
+</script>
+</body>
+</html>
